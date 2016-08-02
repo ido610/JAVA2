@@ -56,7 +56,7 @@ public @Data class MultiplicationAlgorithemEncryptor extends MultiplicationAlgor
 			}else{
 			setKey(getKeyMultiplication());}
 			safePrintln("The key that was generate is:"+getKey());
-			keyToBin("key.bin");
+			keyToBin(this.getFilePath().getParent()+"/key.bin");
 			return readFromFile();	
 		} catch (IllegalKeyException e) {
 			// TODO Auto-generated catch block

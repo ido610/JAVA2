@@ -25,7 +25,7 @@ public @Data class XorAlgorithemEncryptor extends XorAlgorithem {
 
 		long startTime = System.currentTimeMillis();
 		byte[] data=encryptData();
-		keyToBin("key.bin");//Write key to file
+		keyToBin(this.getFilePath().getParent()+"/key.bin");//Write key to file
 		data=xorAction(data);//encrypt each byte
 		String path=getFilePath().toString()+".encrypted";
 		writeToFile(data,path);//Write encrypted file

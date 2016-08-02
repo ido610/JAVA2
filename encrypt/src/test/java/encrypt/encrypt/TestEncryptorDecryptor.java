@@ -40,12 +40,14 @@ public class TestEncryptorDecryptor {
 
 	@SuppressWarnings("deprecation")
 	@Test
-	public void testReadFromFile() {
+	public void testReadFromFile() throws IOException {
 		SimpleAlgorithem test=mock(SimpleAlgorithem.class, Mockito.CALLS_REAL_METHODS);
 		byte[] data={21,35,47,25,-26,-46};
-		test.setFilePath(Paths.get(System.getProperty("user.dir")+"/src/test/java/testWrite.txt"));
-		test.writeToFile(data, System.getProperty("user.dir")+"/src/test/java/testWrite.txt");
+		File testFile=folder.newFile("test.txt");
+		test.setFilePath(testFile.toPath());
+		test.writeToFile(data,testFile.toString());
 		assertArrayEquals(data,test.readFromFile());
+		folder.delete();
 	}
 
 
@@ -54,9 +56,12 @@ public class TestEncryptorDecryptor {
 	public void testWriteToFile() throws IOException {
 		SimpleAlgorithem test=mock(SimpleAlgorithem.class, Mockito.CALLS_REAL_METHODS);
 		byte[] data={21,35,47,25,-26,-46};
-		test.writeToFile(data, System.getProperty("user.dir")+"/src/test/java/testWrite.txt");
-		assertTrue(new File(System.getProperty("user.dir")+"/src/test/java/testWrite.txt").isFile());
-		assertArrayEquals(data,Files.readAllBytes(Paths.get(System.getProperty("user.dir")+"/src/test/java/testWrite.txt")));
+		File testFile=folder.newFile("test.txt");
+		test.writeToFile(data ,testFile.toString());
+		assertTrue(testFile.isFile());
+		assertArrayEquals(data,Files.readAllBytes(Paths.get(testFile.toString())));
+		folder.delete();
+
 	}
 
 

@@ -68,10 +68,10 @@ public class DoubleAlgorithemEncryptor extends DoubleAlgorithem {
 	public void action() {
 		chooseEncryptorDecryptorAlgo();
 		a.action();//First algo encryption
-		a.keyToBin("key1.bin");//Write key for first algo
+		a.keyToBin(this.getPath().getParent()+"/key1.bin");//Write key for first algo
 		b.setFilePath(a.getFilePathAfter());
 		b.action();//Second algo encryption
-		b.keyToBin("key2.bin");//Write key for second algo
+		b.keyToBin(this.getPath().getParent()+"/key2.bin");//Write key for second algo
 	    try {
 			Files.delete(a.getFilePathAfter());//Delete temporary file
 		} catch (IOException e) {

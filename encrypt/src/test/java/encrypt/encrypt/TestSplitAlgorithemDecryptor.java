@@ -4,15 +4,20 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 public class TestSplitAlgorithemDecryptor {
-
+	@Rule
+	public TemporaryFolder folder= new TemporaryFolder();
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -29,12 +34,15 @@ public class TestSplitAlgorithemDecryptor {
 
 	@Test
 	public void testAction() throws IOException {
-		SplitAlgorithemEncryptor x=new SplitAlgorithemEncryptor(System.getProperty("user.dir")+"/src/test/java/test.txt");
+		File createdFile= folder.newFile("myfile.txt");
+	    Files.write(Paths.get(createdFile.getPath()),new String("Hello World").getBytes());
+	    SplitAlgorithemEncryptor x=new SplitAlgorithemEncryptor(createdFile.getPath());
 		x.action();
-		SplitAlgorithemDecryptor y=new SplitAlgorithemDecryptor(System.getProperty("user.dir")+"/src/test/java/test.txt.encrypted");
+		SplitAlgorithemDecryptor y=new SplitAlgorithemDecryptor(createdFile.getPath()+".encrypted");
 		y.action();
 		assertEquals("The files differ!", 
-			    FileUtils.readFileToString(new File("src/test/java/test.txt"), "utf-8"), 
-			    FileUtils.readFileToString(new File("src/test/java/test_decrypted.txt"), "utf-8"));			}
+			    FileUtils.readFileToString(createdFile, "utf-8"), 
+			    FileUtils.readFileToString(new File(folder.getRoot()+"/myfile_decrypted.txt"), "utf-8"));	
+		folder.delete();}
 
 }

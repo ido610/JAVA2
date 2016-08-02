@@ -11,6 +11,7 @@ import java.io.IOException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
@@ -19,6 +20,7 @@ import org.junit.rules.TemporaryFolder;
  *
  */
 public class TestHelperProg {
+	@Rule
 	 public TemporaryFolder folder = new TemporaryFolder();
 
 	/**
@@ -70,9 +72,10 @@ public class TestHelperProg {
 	@Test
 	public void testGetFilePath() throws IOException {
 		HelperProg x=new HelperProg();
-        File y=new File(x.getFilePath());
+        File y=folder.newFile((x.getFilePath()));
         assertTrue("File should be exist",y.exists());
         assertFalse("Supposed to be file",y.isDirectory());
+        folder.delete();
 
 	}
 

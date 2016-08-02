@@ -4,15 +4,20 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 public class TestCeaserEncryptor {
-
+	@Rule
+	public TemporaryFolder folder= new TemporaryFolder();
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -27,12 +32,15 @@ public class TestCeaserEncryptor {
 
 	@Test
 	public void testAction() throws IOException {
-		CeaserEncryptor x=new CeaserEncryptor(System.getProperty("user.dir")+"/src/test/java/test.txt");
+		File createdFile= folder.newFile("myfile.txt");
+	    Files.write(Paths.get(createdFile.getPath()),new String("Hello World").getBytes());
+		CeaserEncryptor x=new CeaserEncryptor(createdFile.getPath());
 		x.action();
-		CeaserDecryptor y=new CeaserDecryptor(System.getProperty("user.dir")+"/src/test/java/test.txt.encrypted");
+		CeaserDecryptor y=new CeaserDecryptor(createdFile.getPath()+".encrypted");
 		y.action();
 		assertEquals("The files differ!", 
-			    FileUtils.readFileToString(new File("src/test/java/test.txt"), "utf-8"), 
-			    FileUtils.readFileToString(new File("src/test/java/test_decrypted.txt"), "utf-8"));	}
+			    FileUtils.readFileToString(createdFile, "utf-8"), 
+			    FileUtils.readFileToString(new File(folder.getRoot()+"/myfile_decrypted.txt"), "utf-8"));	
+		folder.delete();	}
 
 }

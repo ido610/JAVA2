@@ -60,7 +60,7 @@ public @Data class SplitAlgorithemEncryptor extends SplitAlgorithem {
 		 algo.writeToFile(arr,path.toString()+extra);
 		 algo.setFilePath(Paths.get(path.toString()+extra));
 		 algo.action();
-		 algo.keyToBin("key"+x+".bin");
+		 algo.keyToBin(this.getPath().getParent()+"/key"+x+".bin");
 		 algo.setFilePath(Paths.get(path.toString()+extra+".encrypted"));
 		 arr=algo.readFromFile();
 		 try {
