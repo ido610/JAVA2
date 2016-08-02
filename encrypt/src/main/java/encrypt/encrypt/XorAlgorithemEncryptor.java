@@ -36,7 +36,7 @@ public @Data class XorAlgorithemEncryptor extends XorAlgorithem {
 
 	}
 	public void run() {
-		action();
+		action(); 
 	}
 
 }
