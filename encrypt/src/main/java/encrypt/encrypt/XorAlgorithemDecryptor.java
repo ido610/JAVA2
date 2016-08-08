@@ -25,14 +25,14 @@ public @Data class XorAlgorithemDecryptor extends XorAlgorithem {
 	     log.info("Start xor decryption for file: "+getFilePath());
 
 		byte[] data=decryptData();//Get file content
-		long startTime = System.currentTimeMillis();
+		this.setStartTime(System.currentTimeMillis());
 		data=xorAction(data);//Decrypt each byte
 			String[] tokens = getFilePath().toString().split("\\.(?=[^\\.]+$)");
 		tokens=tokens[0].split("\\.(?=[^\\.]+$)");
 		String path=tokens[0]+"_decrypted."+tokens[1];
 		writeToFile(data,path);//Write decrypted bytes to file
-		long endTime = System.currentTimeMillis();
-		long totalTime = endTime - startTime;
+		this.setEndTime(System.currentTimeMillis());
+		long totalTime = this.getEndTime() - this.getEndTime();
 		//safePrintln("Time for action for file:"+this.getFilePath()+" is:"+totalTime+"ms");
 	      log.info("Time for action for file:"+this.getFilePath()+" is:"+totalTime+"ms");
 

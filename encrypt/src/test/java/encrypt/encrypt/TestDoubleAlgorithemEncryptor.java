@@ -20,6 +20,8 @@ public class TestDoubleAlgorithemEncryptor {
 	public TemporaryFolder folder= new TemporaryFolder();
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		System.out.println("-------Start testing DoubleAlgorithemEncryptor "+"-----");
+
 	}
 
 	@Before

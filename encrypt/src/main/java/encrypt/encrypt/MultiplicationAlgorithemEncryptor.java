@@ -34,14 +34,14 @@ public @Data class MultiplicationAlgorithemEncryptor extends MultiplicationAlgor
 		//safePrintln("Start Multiplication encryption for file: "+getFilePath());
 	     log.info("Start Multiplication encryption for file: "+getFilePath());
 
-		long startTime = System.currentTimeMillis();
+		this.setStartTime(System.currentTimeMillis());
 		byte[] data=encryptData();//Get file byte's array
 		if(data!=null){
 		data=MultiplicationAction(data);//Encrypte bytes array
 		String path=getFilePath().toString()+".encrypted";
 		writeToFile(data,path);//Write encrypted bytes to path
-		long endTime = System.currentTimeMillis();
-		long totalTime = endTime - startTime;
+		this.setEndTime(System.currentTimeMillis());
+		long totalTime = this.getEndTime() - this.getEndTime();
 	//	safePrintln("Time for action for file:"+this.getFilePath()+" is:"+totalTime+"ms");
 	     log.info("Time for action for file:"+this.getFilePath()+" is:"+totalTime+"ms");
 

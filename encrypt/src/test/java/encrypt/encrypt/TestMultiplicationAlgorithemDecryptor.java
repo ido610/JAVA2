@@ -31,6 +31,8 @@ public class TestMultiplicationAlgorithemDecryptor {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		System.out.println("-------Start testing MultiplicationAlgorithemDecryptor"+"-----");
+
 	}
 
 	/**

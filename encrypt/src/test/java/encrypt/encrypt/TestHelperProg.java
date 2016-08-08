@@ -28,6 +28,8 @@ public class TestHelperProg {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		System.out.println("-------Start testing HelperProg"+"-----");
+
 	}
 
 	/**
@@ -42,6 +44,7 @@ public class TestHelperProg {
 	 */
 	@After
 	public void tearDown() throws Exception {
+
 	}
 
 

@@ -79,7 +79,7 @@ public @Data abstract class MultipleFile {
 		        result = true;
 		    } 
 		    catch(SecurityException se){
-		        //handle it
+		        se.getMessage();
 		    }        
 		    if(result) {    
 		        System.out.println("Directory created");  
@@ -88,5 +88,8 @@ public @Data abstract class MultipleFile {
 	        System.out.println("Directory already exist");  
 		}
 	}
+	
+	
+	
 
 }

@@ -11,10 +11,17 @@ public @Data class HelperProg implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		do{
+		//int x=xmlOrMenu():
+		int x=2;
+		int userChoiceAlgorithem=-1;
 		Object obj = null;
 		String destination;
 		int userChoiceAction=getActionrUserChoice();//Choose encrypt or decrypt
-		int userChoiceAlgorithem=getAlgoUserChoice();//Choose algo for action
+		if(x==2){
+			userChoiceAlgorithem=getAlgoUserChoice();}//Choose algo for action
+		else{
+			//obj=getObjectFromXML();
+		}
 		if(userChoiceAlgorithem!=7){
 			destination=getFilePath();
 			obj=(IEncryptorDecryptor)obj;}
@@ -50,7 +57,7 @@ public @Data class HelperProg implements Runnable {
 		System.out.print("Hello! ");
 		//Get user choice for action until right input received.
 		do{
-			System.out.println("Choose an action:\n1-Encryptor\n2-Decryptor");
+			System.out.println("Choose an action:\n1-Encryption\n2-Decryption");
 			try{
 				choiceInt=reader.nextInt();
 				if(choiceInt==1){
@@ -72,7 +79,30 @@ public @Data class HelperProg implements Runnable {
 
 
 	}
-	
+	public int xmlOrMenu(){
+		int choiceInt;
+		Scanner reader = new Scanner(System.in);  // Reading from System.in
+
+		//Get user choice for action until right input received.
+		do{
+			System.out.println("Choose:1-Algorithem from XML\n2-Change algo from menu");
+			try{
+				choiceInt=reader.nextInt();
+				if(choiceInt>=1 && choiceInt<=2){
+					return choiceInt;}
+				else{
+					System.out.println("Wrong value!");
+					
+				}
+
+			}
+			catch (InputMismatchException a) {
+				System.out.println("This is not a number!");
+				reader.next();
+			}
+
+		}while(true);
+	}
 	public int getAlgoUserChoice(){
 		int choiceInt;
 		Scanner reader = new Scanner(System.in);  // Reading from System.in

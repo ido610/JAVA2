@@ -20,6 +20,8 @@ public class TestXorAlgorithemDecryptor {
 	public TemporaryFolder folder= new TemporaryFolder();
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		System.out.println("-------Start testing TestXorAlgorithemDecryptor"+"-----");
+
 	}
 
 	@Before

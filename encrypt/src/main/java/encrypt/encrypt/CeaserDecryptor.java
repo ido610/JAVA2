@@ -41,7 +41,7 @@ public @Data class CeaserDecryptor extends CeaserAlgorithem {
 		byte[] data;
 		data=decryptData();
 		
-		long startTime = System.currentTimeMillis();
+		this.setStartTime(System.currentTimeMillis());
 		for(int i=0;i<data.length;i++){//For each byte in file
 			int bit=data[i]-getKey();
 			data[i]=byteAfterAction(bit);//Fix byte value with overflow
@@ -53,11 +53,17 @@ public @Data class CeaserDecryptor extends CeaserAlgorithem {
 		if(this.getMultipleFiles()==1){
 			path=Paths.get(path).getParent().toString()+"/encrypted-decrypted/"+Paths.get(path).getFileName().toString();
 		}
-		writeToFile(data,path);//Write decrypted file bytes to new path
-		long endTime = System.currentTimeMillis();
-		long totalTime = endTime - startTime;
-		//safePrintln("Time for action for file:"+this.getFilePath()+" is:"+totalTime+"ms");
-	      log.info("Time for action for file:"+this.getFilePath()+" is:"+totalTime+"ms");
+		if(this.getStatus()==0){
+
+			writeToFile(data,path);//Write decrypted file bytes to new path
+			this.setEndTime(System.currentTimeMillis());
+			long totalTime = this.getEndTime() - this.getStartTime();
+		     log.info("Time for action for file:"+this.getFilePath()+" is:"+totalTime+"ms");
+		}
+		else{
+			log.info("Action fail for file"+this.getFilePath()+" due to exception:"+this.getError().getMessage());
+					
+		}
 
 		end();
 

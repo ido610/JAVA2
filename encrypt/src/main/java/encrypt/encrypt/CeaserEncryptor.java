@@ -43,7 +43,7 @@ public @Data class CeaserEncryptor extends CeaserAlgorithem {
 		//safePrintln("Start ceaser encryption for file: "+getFilePath());
 	     log.info("Start ceaser encryption for file "+getFilePath());
 
-		long startTime = System.currentTimeMillis();
+		this.setStartTime(System.currentTimeMillis());
 		byte[] data;
 		data=encryptData();	//Get file byte array
 		
@@ -60,11 +60,16 @@ public @Data class CeaserEncryptor extends CeaserAlgorithem {
 			path=getFilePath().getParent().toString()+"/encrypted-decrypted/"+
 					getFilePath().getFileName().toString()+".encrypted";
 		}
-		writeToFile(data,path);//Write encrypted bytes to path
-		long endTime = System.currentTimeMillis();
-		long totalTime = endTime - startTime;
-		//safePrintln("Time for action for file:"+this.getFilePath()+" is:"+totalTime+"ms");
-	     log.info("Time for action for file:"+this.getFilePath()+" is:"+totalTime+"ms");
+		if(this.getStatus()==0){
+			writeToFile(data,path);//Write encrypted bytes to path
+			this.setEndTime(System.currentTimeMillis());
+			long totalTime = this.getEndTime() - this.getStartTime();
+			//safePrintln("Time for action for file:"+this.getFilePath()+" is:"+totalTime+"ms");
+		     log.info("Time for action for file:"+this.getFilePath()+" is:"+totalTime+"ms");
+		}	else{
+			log.info("Action fail for file"+this.getFilePath()+" due to exception:"+this.getError().getMessage());
+					
+		}
 		end();
 	}
 	public void run() {

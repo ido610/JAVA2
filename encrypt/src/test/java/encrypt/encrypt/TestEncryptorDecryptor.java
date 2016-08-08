@@ -26,7 +26,8 @@ public class TestEncryptorDecryptor {
 	@SuppressWarnings("unused")
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		 
+		System.out.println("-------Start testing EncryptorDecryptor "+"-----");
+
 	}
 
 	@Before

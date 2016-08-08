@@ -27,6 +27,9 @@ public @Data abstract class SimpleAlgorithem implements IEncryptorDecryptor,Runn
 	private int multipleFiles;
 	private int status;
 	private String keyPath;
+	private long startTime;
+	private long endTime;
+	private Exception error;
     static Logger log = Logger.getLogger(SimpleAlgorithem.class.getName());
 
 	/**
@@ -64,41 +67,27 @@ public @Data abstract class SimpleAlgorithem implements IEncryptorDecryptor,Runn
 	 * @param path
 	 * Write the byte string after the action in file
 	 */
-	protected synchronized  void writeToFile(byte[] data, String path) {
+	protected  void writeToFile(byte[] data, String path) {
 	    Random rand = new Random();
 		try {
 			Files.write(Paths.get(path), data);
 			this.filePathAfter=Paths.get(path);
+			log.info("File saved in:" + path);
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			log.info("Unable to write to output file");
+			log.info("Unable to write to output file-exiting thread");
+	         status=1;
+	         error=e;
+			
 		}
 
-		log.info("File saved in:" + path);
 
 	}
-	//For encryption
-	public void setKey() {
-		setKey(-1);
-		boolean flag=false;
-		Scanner reader = new Scanner(System.in);  // Reading from System.in
 
-		do{
-			safePrintln("Please enter a key number:");
-			try{
-				setKey(reader.nextInt());
-				flag=true;
-			}catch (InputMismatchException a) {
-				safePrintln("This is not a number!");
-				reader.next();
-				//throw new InputMismatchException("The key is not a number");
-			}
-
-		}while(flag==false && getKey()<=0);
-		}
 	//For decryption
 
-	public synchronized void setKey(int key) {
+	public void setKey(int key) {
 		this.key = key;
 	}
 	public  byte[] encryptData(){
@@ -130,17 +119,21 @@ public @Data abstract class SimpleAlgorithem implements IEncryptorDecryptor,Runn
 	         safePrintln("Serialized key is saved in "+to);
 	      }catch(IOException i)
 	      {
-	          i.printStackTrace();
+		         status=1;
+		         error=i;
 	      }
 	}
 	/*Read bytes from file*/
-	public synchronized byte[] readFromFile(){
+	public  byte[] readFromFile(){
 		byte[] data = null;
 		try {
 			data = Files.readAllBytes(getFilePath());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 	 	     log.info("Unable to read file");
+	         status=1;
+	         error=e;
+
 		}
 		return data;
 		
@@ -157,17 +150,18 @@ public @Data abstract class SimpleAlgorithem implements IEncryptorDecryptor,Runn
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			safePrintln("Enter key path:");
-			Scanner reader = new Scanner(System.in);  // Reading from System.in
-			path=reader.next();
-			keyFromFile(path);
+			do{
+				safePrintln("Enter key path:");
+				Scanner reader = new Scanner(System.in);  // Reading from System.in
+				path=reader.next();
+				}while(keyFromFile(path)==0);
 		}
 		return readFromFile();	
 	}
 	/*
 	 * Get key from the path and set him
 	 */
-	protected synchronized void keyFromFile(String path){
+	protected synchronized int keyFromFile(String path){
 				int key = 0;
 			      try
 			      {
@@ -176,17 +170,25 @@ public @Data abstract class SimpleAlgorithem implements IEncryptorDecryptor,Runn
 			         key = (Integer) in.readObject();
 			         in.close();
 			         fileIn.close();
+			         setKey(key);
+			         return 1;
 			         //System.out.println("Key found is:"+key);
 			      }catch(IOException i)
 			      {
 				 	     log.info("key not found");
+				         status=1;
+				         error=i;
+
+
 			      }catch(ClassNotFoundException c)
 			      {
 			 	     log.info("key not found");
 			    	  //safePrintln("key not found");
-			         c.printStackTrace();
+			         status=1;
+			         error=c;
+
 			      }
-			      setKey(key);
+			      return 0;
 	}
 	/*
 	 * Synchronized printing

@@ -23,14 +23,14 @@ public @Data class XorAlgorithemEncryptor extends XorAlgorithem {
 		//safePrintln("Start xor encryption for file: "+getFilePath());
 	      log.info("Start xor decryption for file "+getFilePath());
 
-		long startTime = System.currentTimeMillis();
+		this.setStartTime(System.currentTimeMillis());
 		byte[] data=encryptData();
 		keyToBin(this.getFilePath().getParent()+"/key.bin");//Write key to file
 		data=xorAction(data);//encrypt each byte
 		String path=getFilePath().toString()+".encrypted";
 		writeToFile(data,path);//Write encrypted file
-		long endTime = System.currentTimeMillis();
-		long totalTime = endTime - startTime;
+		this.setEndTime(System.currentTimeMillis());
+		long totalTime = this.getEndTime() - this.getEndTime();
 	//	safePrintln("Time for action for file:"+this.getFilePath()+" is:"+totalTime+"ms");
 	      log.info("Time for action for file:"+this.getFilePath()+" is:"+totalTime+"ms");
 
